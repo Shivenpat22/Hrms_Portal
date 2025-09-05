@@ -1,11 +1,9 @@
 package com.hrms.config;
 
 import com.hrms.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,18 +28,24 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            return userService.getUserByUsername(username)
-                    .orElseThrow(() -> new RuntimeException("User not found: " + username));
-        };
+        return username -> userService.getUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found: " + username));
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/uploads/**").permitAll()
-                .requestMatchers("/login", "/access-denied").permitAll()
+                .requestMatchers(
+                    "/", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/images/**", 
+                    "/uploads/**", 
+                    "/uploads/employee-photos/**", 
+                    "/login", 
+                    "/access-denied"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -64,3 +68,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+

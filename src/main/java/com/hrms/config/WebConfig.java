@@ -4,16 +4,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Handle static resources (Spring Boot already serves /static/** by default)
+        // 🔥 Absolute path of uploads folder
+        Path uploadDir = Paths.get(System.getProperty("user.dir"), "uploads");
+        String uploadPath = uploadDir.toFile().getAbsolutePath();
+
+        // ✅ Expose uploaded photos
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + uploadPath + "/");
+
+        // ✅ Static resources (css/js/images)
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
 
-        // Handle CSS, JS, and images
         registry.addResourceHandler("/css/**")
                 .addResourceLocations("classpath:/static/css/");
 
@@ -24,3 +34,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/images/");
     }
 }
+

@@ -13,12 +13,30 @@
         <!-- Sidebar -->
         <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
             <div class="position-sticky pt-3">
-                <div class="text-center mb-4"><h4 class="text-white">HRMS</h4></div>
+                <div class="text-center mb-4">
+                    <h4 class="text-white">HRMS</h4>
+                </div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link text-white" href="/admin/dashboard"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link text-white active" href="/employees"><i class="fas fa-users me-2"></i>Employees</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="/departments"><i class="fas fa-building me-2"></i>Departments</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="/roles"><i class="fas fa-user-tag me-2"></i>Roles</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/admin/dashboard">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white active" href="/employees">
+                            <i class="fas fa-users me-2"></i>Employees
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/departments">
+                            <i class="fas fa-building me-2"></i>Departments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/roles">
+                            <i class="fas fa-user-tag me-2"></i>Roles
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -28,15 +46,24 @@
             <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Employee Details</h1>
                 <div>
-                    <a th:href="@{/employees/{id}/edit(id=${employee.id})}" class="btn btn-warning"><i class="fas fa-edit me-2"></i>Edit</a>
-                    <a href="/employees" class="btn btn-secondary"><i class="fas fa-arrow-left me-2"></i>Back to List</a>
+                    <a th:href="@{/employees/{id}/edit(id=${employee.id})}" class="btn btn-warning">
+                        <i class="fas fa-edit me-2"></i>Edit
+                    </a>
+                    <a href="/employees" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to List
+                    </a>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header"><h5 class="mb-0"><i class="fas fa-user me-2"></i>Employee Information</h5></div>
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-user me-2"></i>
+                                Employee Information
+                            </h5>
+                        </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -47,8 +74,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p><strong>Joining Date:</strong> <span th:text="${#temporals.format(employee.joiningDate, 'dd/MM/yyyy')}"></span></p>
-                                    <p><strong>Department:</strong> <span th:text="${employee.department != null ? employee.department.name : 'N/A'}"></span></p>
-                                    <p><strong>Role:</strong> <span th:text="${employee.role != null ? employee.role.title : 'N/A'}"></span></p>
+                                    <p><strong>Department:</strong> <span th:text="${employee.department.name}"></span></p>
+                                    <p><strong>Role:</strong> <span th:text="${employee.role.title}"></span></p>
                                     <p><strong>Created:</strong> <span th:text="${#temporals.format(employee.createdAt, 'dd/MM/yyyy HH:mm')}"></span></p>
                                 </div>
                             </div>
@@ -59,10 +86,21 @@
                 <!-- Photo -->
                 <div class="col-md-4">
                     <div class="card">
-                        <div class="card-header"><h6 class="mb-0"><i class="fas fa-image me-2"></i>Photo</h6></div>
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <i class="fas fa-image me-2"></i>
+                                Photo
+                            </h6>
+                        </div>
                         <div class="card-body text-center">
-                            <img th:if="${employee.photoUrl != null}" th:src="${employee.photoUrl}" class="img-fluid rounded" style="max-width: 200px;" alt="Employee Photo">
-                            <div th:unless="${employee.photoUrl}" class="bg-secondary rounded d-flex align-items-center justify-content-center" style="width:200px;height:200px;margin:0 auto;">
+                            <img th:if="${employee.photoUrl != null}"
+                                 th:src="@{${employee.photoUrl}}"
+                                 class="img-fluid rounded"
+                                 style="max-width: 200px;"
+                                 alt="Employee Photo">
+                            <div th:unless="${employee.photoUrl != null}"
+                                 class="bg-secondary rounded d-flex align-items-center justify-content-center"
+                                 style="width: 200px; height: 200px; margin: 0 auto;">
                                 <i class="fas fa-user fa-3x text-white"></i>
                             </div>
                         </div>
@@ -72,6 +110,8 @@
         </main>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

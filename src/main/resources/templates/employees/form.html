@@ -6,6 +6,26 @@
     <title th:text="${employee.id != null ? 'Edit Employee' : 'Add Employee'} + ' - HR Management System'">Employee Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .photo-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .photo-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #6c757d;
+            color: white;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -80,8 +100,7 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="mobile" class="form-label">Mobile Number *</label>
-                                        <input type="text" class="form-control" id="mobile" th:field="*{mobile}"
-                                               placeholder="10 digits" required>
+                                        <input type="text" class="form-control" id="mobile" th:field="*{mobile}" placeholder="10 digits" required>
                                         <div class="text-danger" th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></div>
                                     </div>
 
@@ -103,9 +122,7 @@
                                         <label for="department" class="form-label">Department *</label>
                                         <select class="form-select" id="department" th:field="*{department}" required>
                                             <option value="">Select Department</option>
-                                            <option th:each="dept : ${departments}"
-                                                    th:value="${dept.id}"
-                                                    th:text="${dept.name}">Department</option>
+                                            <option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.name}"></option>
                                         </select>
                                         <div class="text-danger" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></div>
                                     </div>
@@ -116,27 +133,22 @@
                                         <label for="role" class="form-label">Role *</label>
                                         <select class="form-select" id="role" th:field="*{role}" required>
                                             <option value="">Select Role</option>
-                                            <option th:each="role : ${roles}"
-                                                    th:value="${role.id}"
-                                                    th:text="${role.title}">Role</option>
+                                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.title}"></option>
                                         </select>
                                         <div class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
                                     </div>
 
-                                    <!-- Photo Upload + Preview -->
-                                    <div class="col-md-6 mb-3">
-                                        <label for="photo" class="form-label">Photo</label>
-                                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                                        <div class="form-text">Upload employee photo (optional)</div>
-
-                                        <!-- ✅ Existing photo preview (edit mode only) -->
-                                        <div class="mt-2" th:if="${employee.photo != null}">
-                                            <label class="form-label">Current Photo:</label><br>
-                                            <img th:src="@{'/uploads/' + ${employee.photo}}"
-                                                 alt="Employee Photo"
-                                                 width="100" height="100"
-                                                 style="border-radius: 6px; object-fit: cover;"/>
+                                    <div class="col-md-6 mb-3 text-center">
+                                        <label for="photo" class="form-label d-block">Photo</label>
+                                        <img th:if="${employee.photoUrl != null}"
+                                             th:src="@{${employee.photoUrl}}"
+                                             class="photo-preview"
+                                             alt="Employee Photo">
+                                        <div th:unless="${employee.photoUrl != null}"
+                                             class="photo-placeholder">
+                                            <i class="fas fa-user fa-2x"></i>
                                         </div>
+                                        <input type="file" class="form-control mt-2" id="photo" name="photo" accept="image/*">
                                     </div>
                                 </div>
 
@@ -152,37 +164,19 @@
                     </div>
                 </div>
 
-                <!-- Side Guidelines -->
+                <!-- Guidelines -->
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="mb-0">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Form Guidelines
-                            </h6>
+                            <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i> Form Guidelines</h6>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled mb-0">
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>
-                                    All fields marked with * are required
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>
-                                    Mobile number must be 10 digits
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>
-                                    Email must be unique
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>
-                                    Date of birth must be in the past
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-check text-success me-2"></i>
-                                    Photo should be in JPG, PNG format
-                                </li>
+                                <li><i class="fas fa-check text-success me-2"></i> All fields marked with * are required</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Mobile number must be 10 digits</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Email must be unique</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Date of birth must be in the past</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Photo should be JPG/PNG</li>
                             </ul>
                         </div>
                     </div>
@@ -195,4 +189,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

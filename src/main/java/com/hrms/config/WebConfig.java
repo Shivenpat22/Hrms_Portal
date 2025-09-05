@@ -9,21 +9,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Handle uploaded photos
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:uploads/");
-        
-        // Handle static resources
+        // Handle static resources (Spring Boot already serves /static/** by default)
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
-        
+
         // Handle CSS, JS, and images
         registry.addResourceHandler("/css/**")
                 .addResourceLocations("classpath:/static/css/");
-        
+
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("classpath:/static/js/");
-        
+
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("classpath:/static/images/");
     }

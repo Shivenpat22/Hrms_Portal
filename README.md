@@ -237,35 +237,12 @@ mvn jacoco:report
 4. Build JAR file: `mvn clean package`
 5. Run: `java -jar target/hr-management-system-0.0.1-SNAPSHOT.jar`
 
-### Docker Deployment
-```dockerfile
-FROM openjdk:17-jdk-slim
-COPY target/hr-management-system-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
 
-## License
 
-This project is licensed under the MIT License.
 
-## Support
 
-For support and questions, please contact the development team.
 
-## Changelog
 
-### Version 1.0.0
-- Initial release
-- Employee, Department, and Role management
-- Spring Security integration
-- File upload functionality
-- Search and pagination features
+
